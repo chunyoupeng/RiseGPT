@@ -1,16 +1,11 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredFileLoader
-from langchain.vectorstores.faiss import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
-from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.document_loaders import PyPDFDirectoryLoader, DirectoryLoader
 from langchain.document_loaders import PyPDFLoader
 import os
-from docx import Document
-import subprocess
-import pickle
 import tiktoken  # !pip install tiktoken
 import sys
 import re

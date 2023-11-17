@@ -130,7 +130,7 @@ else:
             full_response += response
             # message_placeholder.markdown(full_response + "▌")
             # message_placeholder.markdown(full_response)
-            sources = "\n\n".join([f"📚 来源: { remain_last( d.metadata['source'] ) } 第 {d.metadata['page']}页" for d in docs])
+            sources = "\n\n".join([f"📚 来源 {i + 1}: { remain_last( d.metadata['source'] ) } 第 {d.metadata['page']}页" for i, d in enumerate(docs)])
             message_placeholder = st.empty()
             message_placeholder.markdown(sources)
         st.session_state.messages.append(
