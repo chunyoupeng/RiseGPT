@@ -4,17 +4,12 @@ from utils import *
 import json
 import os 
 from langchain.chat_models import ChatOpenAI
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.vectorstores.faiss import FAISS
-from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from langchain.vectorstores import Chroma
 from langchain.chains import LLMChain
 from langchain.prompts import (
     ChatPromptTemplate,
-    HumanMessagePromptTemplate,
     MessagesPlaceholder,
-    SystemMessagePromptTemplate,
 )
 from operator import itemgetter
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -28,7 +23,6 @@ say "我不知道".不要强行作答.
 """
 # Prompt
 
-# conversation = ConversationChain(llm=chat_model)
 
 # Start the conversation
 os.environ["OPENAI_API_BASE"] = "https://aiapi.xing-yun.cn/v1" 
