@@ -16,7 +16,7 @@ from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.schema.runnable import RunnableLambda, RunnablePassthrough
 
 _template = """Answer the user questions based on the context. If you don't know, just 
-say "我不知道".不要强行作答.
+say "我不知道".
 <context>
 {context}
 <context/>
@@ -75,7 +75,7 @@ def get_response(question, docs):
             openai_api_key="sk-3e5wTBAl2iFDvQvW9b5693C90a97425eBf3b4bEa558eC66a",
             streaming=True,  # ! important
             callbacks=[stream_handler], # ! important
-            model_name="gpt-3.5-turbo"
+            model_name=st.session_state.openai_model,
         )
     prompt = ChatPromptTemplate.from_messages(
         [
