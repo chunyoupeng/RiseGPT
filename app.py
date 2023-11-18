@@ -15,8 +15,7 @@ from operator import itemgetter
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.schema.runnable import RunnableLambda, RunnablePassthrough
 
-_template = """Answer the user questions based on the context. If you don't know, just 
-say "我不知道".
+_template = """Answer the user questions based on the context. 
 <context>
 {context}
 <context/>
