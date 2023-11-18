@@ -2,6 +2,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredFileLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
+from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.document_loaders import PyPDFDirectoryLoader, DirectoryLoader
 from langchain.document_loaders import PyPDFLoader
@@ -113,20 +114,20 @@ def ingest():
     print(documents[0])
     print("Creating vectorstore...")
     embeddings = OpenAIEmbeddings()
-    vectordb = Chroma.from_documents(documents, embeddings, persist_directory=persist_directory)
-    vectordb.persist()
-    vectordb = None
-    # vectorstore = FAISS.from_documents(documents, embeddings)
-
+    # vectordb = Chroma.from_documents(documents, embeddings, persist_directory=persist_directory)
+    # vectordb.persist()
+    # vectordb = None
+    vectorstore = FAISS.from_documents(documents, embeddings)
+    return vectorstore
     # with open(DIR_SAVED, "wb") as f:
     #     pickle.dump(vectorstore, f)
 
 
-def get_documents(question):
-    persist_directory = "data/vector_src/lzm-vectorstore"
-    embedding = OpenAIEmbeddings()
-    vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
-    retriver = vectordb.as_retriever(search_type="mmr", search_kwargs={'k': 3})
+def get_documents(question, db):
+    # persist_directory = "data/vector_src/lzm-vectorstore"
+    # embedding = OpenAIEmbeddings()
+    # vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
+    retriver = db.as_retriever(search_type="mmr", search_kwargs={'k': 3})
     docs = retriver.get_relevant_documents(query=question)
     return docs
 
