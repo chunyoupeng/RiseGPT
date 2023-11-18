@@ -6,3 +6,4 @@ tiktoken
 openai
 chromadb
 faiss-cpu
+pypdf
