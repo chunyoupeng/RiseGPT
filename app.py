@@ -30,12 +30,12 @@ os.environ["OPENAI_API_KEY"] = "sk-3e5wTBAl2iFDvQvW9b5693C90a97425eBf3b4bEa558eC
 st.title("RiseGPT")
 with st.expander("ℹ️ 说明"):
     st.caption(
-        "重庆市西南大学Rise实验室刘志明老师论文助手"
+        "重庆市西南大学Rise实验室刘志明老师论文助手(第一次加载请稍等)"
     )
 
 # openai.api_key = st.secrets["OPENAI_API_KEY"]
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
+    st.session_state["openai_model"] = "gpt-4-1106-preview"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
