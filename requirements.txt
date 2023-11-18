@@ -1,7 +1,7 @@
-docx==0.2.4
-langchain==0.0.336
-python_docx==1.1.0
-streamlit==1.28.1
-tiktoken==0.5.1
+docx
+langchain
+python_docx
+streamlit
+tiktoken
 openai
 chromadb
