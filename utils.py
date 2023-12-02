@@ -13,9 +13,6 @@ import re
 import os
 
 
-
-
-
 def load_pdf(directory):
     documents = []
     for filename in os.listdir(directory):
@@ -32,25 +29,18 @@ def load_pdf(directory):
 def delete_space(path):
     import os
 
-    # 指定文件夹路径
     folder_path = path
 
-    # 遍历文件夹中的所有文件
-# 遍历文件夹中的所有文件
     for root, dirs, files in os.walk(folder_path):
         for file in files:
-            # 只处理.txt文件
             if file.endswith('.txt'):
                 file_path = os.path.join(root, file)
 
-                # 打开文件并读取内容
                 with open(file_path, 'r') as f:
                     content = f.read()
 
-                # 去掉所有的空格和换行符
                 processed_content = content.replace(' ', '').replace('\n', '')
 
-                # 重新写入文件
                 with open(file_path, 'w') as f:
                     f.write(processed_content)
 
@@ -87,7 +77,6 @@ def ingest():
 
     PATH = "data/vector_src"
     print("Loading data...")
-    # loader = UnstructuredFileLoader("state_of_the_union.txt")
 
     if not os.path.exists(PATH):
         os.makedirs(PATH)
@@ -96,8 +85,6 @@ def ingest():
     folder_path = "data/docs/" + "lzm/"  # path to xx_src
     loader = PyPDFDirectoryLoader(folder_path)
     text_docs = DirectoryLoader(path=folder_path, glob="**/*.txt").load()
-    # delete_space(folder_path)
-    # raw_documents = load_pdf(sys.argv[1])
     raw_documents = loader.load()
     raw_documents.extend(text_docs)
 
@@ -114,19 +101,11 @@ def ingest():
     print(documents[0])
     print("Creating vectorstore...")
     embeddings = OpenAIEmbeddings()
-    # vectordb = Chroma.from_documents(documents, embeddings, persist_directory=persist_directory)
-    # vectordb.persist()
-    # vectordb = None
     vectorstore = FAISS.from_documents(documents, embeddings)
     return vectorstore
-    # with open(DIR_SAVED, "wb") as f:
-    #     pickle.dump(vectorstore, f)
 
 
 def get_documents(question, db):
-    # persist_directory = "data/vector_src/lzm-vectorstore"
-    # embedding = OpenAIEmbeddings()
-    # vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
     retriver = db.as_retriever(search_type="mmr", search_kwargs={'k': 3})
     docs = retriver.get_relevant_documents(query=question)
     return docs

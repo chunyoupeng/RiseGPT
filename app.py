@@ -23,7 +23,6 @@ _template = """Answer the user questions based on the context.
 # Prompt
 
 
-# Start the conversation
 os.environ["OPENAI_API_BASE"] = "https://aiapi.xing-yun.cn/v1" 
 os.environ["OPENAI_API_KEY"] = "sk-3e5wTBAl2iFDvQvW9b5693C90a97425eBf3b4bEa558eC66a"
 st.title("RiseGPT")
@@ -32,7 +31,6 @@ with st.expander("ℹ️ 说明"):
         "重庆市西南大学Rise实验室刘志明老师论文助手(第一次加载请稍等)"
     )
 
-# openai.api_key = st.secrets["OPENAI_API_KEY"]
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4-1106-preview"
 
@@ -84,15 +82,12 @@ def get_response(question, docs):
         ]
     )
 
-    # Notice that we `return_messages=True` to fit into the MessagesPlaceholder
-    # Notice that `"chat_history"` aligns with the MessagesPlaceholder name
 
     list_history = st.session_state.messages
     list_history_str = json.dumps(list_history, ensure_ascii=False)
     memory = ConversationBufferMemory(return_messages=True)
     memory.save_context({"input":"hi"},{"output": list_history_str})
     print(memory.load_memory_variables({}))
-    # conversation = LLMChain(llm=chat_model, prompt=prompt, verbose=True, memory=memory)
     chain = (
         RunnablePassthrough.assign(
             history=RunnableLambda(memory.load_memory_variables) | itemgetter("history")
@@ -121,14 +116,10 @@ else:
         with st.chat_message("assistant"):
             full_response = ""
             response = get_response(question, docs)
-            # print(response)
             full_response += response
-            # message_placeholder.markdown(full_response + "▌")
-            # message_placeholder.markdown(full_response)
             sources = "\n\n".join([f"📚 来源 {i + 1}: { remain_last( d.metadata['source'] ) } 第 {d.metadata['page']}页" for i, d in enumerate(docs)])
             message_placeholder = st.empty()
             message_placeholder.markdown(sources)
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response}
         )
-        # print(st.session_state.messages)
